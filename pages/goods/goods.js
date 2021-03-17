@@ -1,5 +1,4 @@
 var app = getApp();
-var WxParse = require('../../lib/wxParse/wxParse.js');
 var util = require('../../utils/util.js');
 var timer = require('../../utils/wxTimer.js');
 var api = require('../../config/api.js');
@@ -8,6 +7,7 @@ Page({
     data: {
         id: 0,
         goods: {},
+        goodsDetails: [],
         gallery: [],
         galleryImages:[],
         specificationList: [],
@@ -117,6 +117,7 @@ Page({
                 }
                 that.setData({
                     goods: res.data.info,
+                    goodsDetails: res.data.info.goods_desc,
                     goodsNumber: res.data.info.goods_number,
                     gallery: res.data.gallery,
                     specificationList: res.data.specificationList,
@@ -125,7 +126,6 @@ Page({
                     galleryImages: galleryImages,
                     loading:1
                 });
-                WxParse.wxParse('goodsDetail', 'html', res.data.info.goods_desc, that);
                 wx.setStorageSync('goodsImage', res.data.info.https_pic_url);
             }
             else{
